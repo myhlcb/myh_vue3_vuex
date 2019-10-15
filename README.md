@@ -5,5 +5,7 @@ use vuex element-ui easyMock axios vue-router
 `
 ### start step by step 
 * use element-ui
+* children router && router update
 * use axios
-* update router
+* use vuex store
+
