@@ -1,5 +1,6 @@
 <template>
   <div class="login">
+    <el-input placeholder="请输入用户名">111111</el-input>
     <div class="slideShadow" v-show="showSlide">
       <transition>
         <div class="slideSty animated bounce">
@@ -28,16 +29,23 @@
           <p>Enter your username and password to log on:</p>
           <i class="el-icon-key"></i>
         </div>
-        <el-form ref="form" :model="form" label-width="80px">
-          <el-form-item label="登录">
-            <el-input placeholder="请输入用户名"></el-input>
+        <el-form
+          :model="ruleForm"
+          status-icon
+          :rules="rules"
+          ref="ruleForm"
+          label-width="100px"
+          class="demo-ruleForm"
+        >
+          <el-form-item label="账号" prop="account">
+            <el-input type="text" v-model="ruleForm.username" autocomplete="off"></el-input>
           </el-form-item>
-          <el-form-item label="密码">
-            <el-input placeholder="请输入密码"></el-input>
+          <el-form-item label="密码" prop="pass">
+            <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">登录</el-button>
-            <el-button>取消</el-button>
+            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -45,25 +53,60 @@
   </div>
 </template>
   <script>
+import slideVerify from "@/components/slideVerify";
+import { createNamespacedHelpers } from "vuex";
+const { mapActions } = createNamespacedHelpers("account");
 export default {
   data() {
     return {
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
-      }
+      ruleForm: {
+        username: "admin",
+        password: "11111111"
+      },
+      rules: {
+        username: [
+          { required: true, message: "请输入账户名称", trigger: "blur" },
+          { min: 5, max: 12, message: "长度在 3 到 12 个字符", trigger: "blur" }
+        ],
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+      },
+      showSlide: false,
+      text: "向右滑动"
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
+    ...mapActions({ _login: "login" }),
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          alert("submit!");
+          this.showSlide = true;
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+    onSuccess(data) {
+      console.log(data, 11);
+      this.showSlide = false;
+      this.$refs.slideDiv.reset();
+      this._login(this.ruleForm).then(() => {
+       this.$router.push('/')
+      });
+    },
+    refresh() {
+      this.$refs.slideDiv.reset();
+    },
+    onFail(data) {
+      console.log(data);
     }
+  },
+  components: {
+    slideVerify
   }
 };
 </script>

@@ -14,4 +14,14 @@ module.exports = {
       },
     };
   },
+  // baseUrl: process.env.VUE_APP_URL,
+  publicPath: '/',
+  devServer: {
+    proxy: {
+      '/v1': {
+        target: 'http://localhost:3002/',
+        changeOrigin: true,
+      },
+    },
+  },
 };

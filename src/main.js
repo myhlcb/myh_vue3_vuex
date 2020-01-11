@@ -4,6 +4,8 @@ import router from './router';
 import store from './store';
 import './element-ui';
 import '@/style/index.scss';
+import SlideVerify from 'vue-monoplasty-slide-verify';
+Vue.use (SlideVerify);
 
 Vue.config.productionTip = false;
 

@@ -9,3 +9,6 @@ use vuex element-ui easyMock axios vue-router
 * use axios
 * use vuex store
 
+### vue知识点
+#### keep-alive缓存路由
+* include exclude属性

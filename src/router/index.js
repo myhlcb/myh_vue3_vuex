@@ -2,10 +2,13 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Layout from '@/layout';
 import Login from 'view/login';
+import store from '@/store';
 import Dashboard from 'view/dashboard';
+import {getToken} from '@/utils/auth';
 Vue.use (Router);
 
 const router = new Router ({
+  base: process.env.VUE_APP_URL,
   routes: [
     {
       path: '/test',
@@ -30,6 +33,11 @@ const router = new Router ({
       ],
     },
     {
+      path: '/',
+      name: 'Home',
+      redirect: '/dashboard',
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login,
@@ -41,17 +49,18 @@ const router = new Router ({
     },
   ],
 });
-router.beforeEach ((to, from, next) => {
-  const a = true;
-  console.log (this.$store, 3333);
-  if (to.path === '/login') {
+router.beforeEach (function (to, from, next) {
+  const token = getToken ();
+
+  if (token) {
+    if (to.path != '/dashboard') {
+      next ({path: 'dashboard'});
+    }
     next ();
-  } else if (a) {
-    console.log (1111);
+  } else if (to.path === '/login') {
     next ();
   } else {
-    next ('/login');
+    next ('login');
   }
-  // next ('/login');
 });
 export default router;

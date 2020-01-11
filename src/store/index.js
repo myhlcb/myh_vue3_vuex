@@ -1,41 +1,50 @@
 import Vuex from 'vuex';
 import Vue from 'vue';
+import {post} from '@/api';
+import {setToken} from '@/utils/auth';
 Vue.use (Vuex);
 const store = new Vuex.Store ({
   modules: {
     account: {
       namespaced: true,
       state: {
-        con: 1111,
+        userInfo: '',
+        con: 0,
       },
       getters: {
-        isAdmin () {
-          return this.store.con + 7;
+        userInfo: state => {
+          state.userInfo;
+        },
+        doneToDos: state => {
+          state.con - 1;
+        },
+        getState: state => {
+          state.con;
         },
       },
       actions: {
-        login({dispatch, commit, getters, rootGetters}) {
-          const a = getters.isAdmin ();
-
-          const b = rootGetters.doneToDos ();
-          console.log (a, 11111111111, b, 22222);
-          console.log (this.store.con, 1118);
-          commit ('login');
-          console.log (this.store.con, 1120, 1113);
-          dispatch ('loginout');
-          console.log (this.store.con, '1101--1101');
+        login ({commit}, data) {
+          return post ('/v1/login', data).then (data => {
+            commit ('login', data);
+            console.log (data, 111111);
+            setToken ('info', data);
+          });
         },
         loginout({commit}) {
-          commit ('login');
-          console.log (this.store.con, 1101);
+          return post ('/v1/logout').then (() => {
+            commit ('loginout');
+            setToken ('info', '');
+          });
         },
       },
       mutations: {
-        login (state) {
-          state.con + 2;
+        login (state, data) {
+          console.log (data, 98766);
+          state.userInfo = data;
+          console.log (state, 777);
         },
         loginout (state) {
-          state.con - 10;
+          state.userInfo = '';
         },
       },
     },

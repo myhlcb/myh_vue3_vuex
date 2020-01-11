@@ -5,14 +5,19 @@ const $axios = axios.create ({
 
 module.exports = {
   post (url, data) {
+    console.log (url, data, 333);
     return $axios ({
       method: 'post',
       url,
       data,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Type': 'application/json',
       },
-    });
+    })
+      .catch (err => {
+        return {success: false};
+      })
+      .then (res => res.data);
   },
 
   get (url) {

@@ -9,6 +9,7 @@
       <button @click="adds">22222</button>
       <button @click="addsss">333333</button>
       <button @click="login">login</button>
+      <button @click="logina">logina</button>
     </p>
     <p>{{adoneToDos}}</p>
     <p>getter:{{getState}}</p>
@@ -40,9 +41,10 @@ export default {
   methods: {
     ddd: function() {
       console.log(111, this.$store.state.count, 2222);
-      console.log(this.$route, 222, this.$router);
-      this.$store.dispatch("increment");
-      this.store.dispatch(); //子模块
+      console.log(this.$store, 222);
+      this.$store.dispatch("account/login").catch(err => {
+        console.log(err, 111111);
+      });
       // this.$router.push("/login");
     },
     ...mapMutations({
@@ -51,7 +53,10 @@ export default {
     ...mapActions({
       addsss: "increment"
     }),
-    ...mapActions({ login: "account/login" }) //子模块
+    ...mapActions({ login: "account/login" }), //子模块
+    ...mapActions("account", {
+      logina: "login"
+    })
   }
 };
 </script>
