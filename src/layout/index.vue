@@ -7,51 +7,44 @@
       <router-link to="/login">login</router-link>
       <button @click="ddd">111111</button>
       <button @click="adds">22222</button>
-      <button @click="addsss">333333</button>
       <button @click="login">login</button>
       <button @click="logina">logina</button>
     </p>
-    <p>{{adoneToDos}}</p>
-    <p>getter:{{getState}}</p>
-    <p>stateCount:{{count}}</p>
-    <p>account/con:{{con}}</p>
+    <p>{{ adoneToDos }}</p>
+    <p>getter:{{ getState }}</p>
+    <p>stateCount:{{ count }}</p>
+    <p>account/con:{{ con }}</p>
     <router-view></router-view>
   </div>
 </template>
-  <script>
+<script>
 import { mapState, mapGetters, mapMutations, mapActions } from "vueX";
 import store from "../store";
 export default {
   computed: {
     ...mapGetters({
-      adoneToDos: "doneToDos",
-      getState: "getState"
+      adoneToDos: "userInfo",
+      getState: "count"
     }),
     ...mapState({
       count: state => {
-        return state.count;
+        return state.account.count;
       }
     }),
     ...mapState("account", {
       con: state => {
-        return state.con;
+        return state.count;
       }
     })
   },
   methods: {
     ddd: function() {
-      console.log(111, this.$store.state.count, 2222);
-      console.log(this.$store, 222);
-      this.$store.dispatch("account/login").catch(err => {
-        console.log(err, 111111);
+            this.$store.dispatch("account/login").catch(err => {
       });
       // this.$router.push("/login");
     },
     ...mapMutations({
-      adds: "increment"
-    }),
-    ...mapActions({
-      addsss: "increment"
+      adds: "account/increment"
     }),
     ...mapActions({ login: "account/login" }), //子模块
     ...mapActions("account", {
@@ -60,5 +53,4 @@ export default {
   }
 };
 </script>
-<style scoped lang='scss'>
-</style>
+<style scoped lang="scss"></style>
