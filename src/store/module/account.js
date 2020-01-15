@@ -25,6 +25,7 @@ const getRouterArr = arr => {
   const array = [];
   arr.forEach (router => {
     //权限
+    router.icon = router.icon || 'el-icon-s-grid';
     if (router.children) {
       router.children = getRouterArr (router.children);
     }

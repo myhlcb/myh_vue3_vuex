@@ -23,10 +23,10 @@ const router = new Router ({
 });
 const asyncRouter = [
   {
-    path: '/testtt',
+    path: '/test',
     name: 'test',
     component: {template: `<p>test</p>`},
-    icon: 'el-icon-document',
+    icon: 'el-icon-moon-night',
     meta: {name: '测试'},
   },
   {
@@ -40,7 +40,6 @@ const asyncRouter = [
     path: '/',
     name: 'Home',
     redirect: '/layout',
-    icon: 'el-icon-setting',
     meta: {name: '主页'},
   },
   {
@@ -49,31 +48,39 @@ const asyncRouter = [
     component: Dashboard,
     redirect: '/dashboard/page',
     icon: 'el-icon-location',
-    meta: {name: '仪表盘'},
+    meta: {name: 'dashboard'},
     children: [
       {
         path: '/test',
         name: 'test',
         component: {template: `<p>test</p>`},
         meta: {name: '测试'},
+        children: [
+          {
+            path: 'page',
+            name: 'page',
+            component: page,
+            meta: {name: '主页'},
+          },
+        ],
       },
       {
-        path: 'page',
+        path: 'pagemain',
         name: 'page',
         component: page,
-        meta: {name: '主页'},
+        meta: {name: 'pagemain'},
       },
       {
         path: 'progress',
         name: 'progress',
         component: progress,
-        meta: {name: '进度条'},
+        meta: {name: 'progress'},
       },
       {
         path: 'table',
         name: 'table',
         component: table,
-        meta: {name: '表格'},
+        meta: {name: 'table'},
       },
     ],
   },
