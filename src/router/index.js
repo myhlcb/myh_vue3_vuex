@@ -9,6 +9,8 @@ import {getToken} from '@/utils/auth';
 import page from '@/view/dashboard/component/page';
 import progress from '@/view/dashboard/component/progress';
 import table from '@/view/dashboard/component/table';
+import icon from '@/view/dashboard/component/icon';
+import test from '@/view/testt';
 Vue.use (Router);
 
 const router = new Router ({
@@ -25,7 +27,7 @@ const asyncRouter = [
   {
     path: '/test',
     name: 'test',
-    component: {template: `<p>test</p>`},
+    component: test,
     icon: 'el-icon-moon-night',
     meta: {name: '测试'},
   },
@@ -51,36 +53,36 @@ const asyncRouter = [
     meta: {name: 'dashboard'},
     children: [
       {
-        path: '/test',
-        name: 'test',
-        component: {template: `<p>test</p>`},
-        meta: {name: '测试'},
-        children: [
-          {
-            path: 'page',
-            name: 'page',
-            component: page,
-            meta: {name: '主页'},
-          },
-        ],
+        path: 'progress',
+        name: 'progress',
+        component: progress,
+        meta: {name: '进度条'},
       },
       {
         path: 'pagemain',
         name: 'page',
         component: page,
-        meta: {name: 'pagemain'},
+        meta: {name: '时间控件'},
+        children: [
+          {
+            path: '/test',
+            name: 'test',
+            component: {template: `<p>test</p>`},
+            meta: {name: '进度条'},
+          },
+        ],
       },
       {
-        path: 'progress',
-        name: 'progress',
-        component: progress,
-        meta: {name: 'progress'},
+        path: 'icon',
+        name: 'icon',
+        component: icon,
+        meta: {name: '图标'},
       },
       {
         path: 'table',
         name: 'table',
         component: table,
-        meta: {name: 'table'},
+        meta: {name: '表格'},
       },
     ],
   },

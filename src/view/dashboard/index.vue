@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-row class="tac">
+    <el-container style="height: 500px; border: 1px solid #eee">
       <slide-bar></slide-bar>
       <page-main></page-main>
-    </el-row>
+    </el-container>
   </div>
 </template>
 <script>

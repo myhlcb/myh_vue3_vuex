@@ -1,9 +1,11 @@
 <template>
   <div>
-    <el-menu-item v-if="!hasChild" :index="index.toString()">
-      <i :class="item.icon"></i>
-      <span slot="title">{{ item.meta.name }}</span>
-    </el-menu-item>
+    <slide-link v-if="!hasChild" :path="item.path">
+      <el-menu-item :index="index.toString()">
+        <i :class="item.icon"></i>
+        <span slot="title">{{ item.meta.name }}</span>
+      </el-menu-item>
+    </slide-link>
     <el-submenu v-else :index="index.toString()">
       <template slot="title">
         <i :class="item.icon"></i>
@@ -20,6 +22,7 @@
   </div>
 </template>
 <script>
+import SlideLink from "./link";
 export default {
   name: "SlideItem",
   props: {
@@ -35,6 +38,7 @@ export default {
       type: Boolean,
       default: true
     }
-  }
+  },
+  components: { SlideLink }
 };
 </script>
